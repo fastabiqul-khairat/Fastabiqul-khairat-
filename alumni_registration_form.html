@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fastabiqul Khairat Cooperative Society — Membership Registration</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --navy:    #0B1D3A;
+    --gold:    #C9982A;
+    --gold-lt: #F0D080;
+    --cream:   #FDF8EF;
+    --slate:   #4A5568;
+    --light:   #EEF1F7;
+    --red:     #C0392B;
+    --green:   #1A6B3C;
+    --border:  #D4C5A9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    min-height: 100vh;
+    color: #1a1a1a;
+  }
+
+  /* === HERO BANNER === */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #162d56 60%, #1a3566 100%);
+    padding: 48px 24px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(201,152,42,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    color: rgba(255,255,255,0.65);
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+    margin-bottom: 28px;
+  }
+  .hero-motto {
+    font-style: italic;
+    color: var(--gold-lt);
+    font-size: 14px;
+    font-weight: 400;
+    opacity: 0.9;
+  }
+
+  /* gold divider line */
+  .gold-line {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+    margin: 0 auto 28px;
+    border-radius: 2px;
+  }
+
+  /* === CONTRIBUTION BANNER === */
+  .contrib-banner {
+    background: var(--gold);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .contrib-banner .icon { font-size: 20px; }
+  .contrib-banner p {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.2px;
+  }
+  .contrib-banner strong { font-size: 16px; }
+
+  /* === FORM WRAPPER === */
+  .form-wrapper {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 36px 20px 60px;
+  }
+
+  /* === SECTIONS === */
+  .section {
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 32px 32px 28px;
+    margin-bottom: 20px;
+    border-top: 4px solid var(--navy);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 26px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    width: 36px; height: 36px;
+    background: var(--navy);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  /* === GRID === */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .full    { grid-column: 1 / -1; }
+  @media (max-width: 580px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .section { padding: 22px 18px; }
+  }
+
+  /* === FIELDS === */
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--slate);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  label .req { color: var(--gold); margin-left: 2px; }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="number"],
+  select, textarea {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #1a1a1a;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    padding: 11px 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    outline: none;
+    appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(11,29,58,0.10);
+  }
+  input.error, select.error, textarea.error {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
+  }
+  textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%230B1D3A' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+  .error-msg {
+    font-size: 11px;
+    color: var(--red);
+    font-weight: 500;
+    display: none;
+  }
+  .field.has-error .error-msg { display: block; }
+
+  .hint {
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+  }
+
+  /* === RADIO / CHECKBOX GROUPS === */
+  .radio-group, .check-group {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 4px;
+  }
+  .radio-opt, .check-opt {
+    display: flex; align-items: center; gap: 8px;
+    cursor: pointer;
+    padding: 9px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #333;
+    background: #fff;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .radio-opt:hover, .check-opt:hover { border-color: var(--navy); background: var(--light); }
+  .radio-opt input, .check-opt input { accent-color: var(--navy); width: 16px; height: 16px; }
+
+  /* === DECLARATION === */
+  .declaration {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 20px;
+    font-size: 13px;
+    color: var(--slate);
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+  .declaration strong { color: var(--navy); }
+
+  .declaration-check {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 13px; color: #333; line-height: 1.5;
+    cursor: pointer;
+  }
+  .declaration-check input {
+    width: 18px; height: 18px; margin-top: 2px;
+    flex-shrink: 0; accent-color: var(--navy);
+  }
+
+  /* === SUBMIT === */
+  .submit-area { text-align: center; margin-top: 10px; }
+  .btn-submit {
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    padding: 16px 56px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, transform 0.1s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-submit::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(201,152,42,0.2));
+    pointer-events: none;
+  }
+  .btn-submit:hover { background: #162d56; transform: translateY(-1px); }
+  .btn-submit:active { transform: translateY(0); }
+  .btn-submit:disabled { background: #aaa; cursor: not-allowed; transform: none; }
+
+  /* === SUCCESS === */
+  #success-screen {
+    display: none;
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 60px 32px;
+    text-align: center;
+    max-width: 580px;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  }
+  .success-icon {
+    width: 80px; height: 80px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 36px;
+  }
+  #success-screen h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  #success-screen p { color: var(--slate); font-size: 15px; line-height: 1.6; }
+  #success-screen .member-ref {
+    display: inline-block;
+    background: var(--navy);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 12px 32px;
+    border-radius: 5px;
+    margin: 20px 0;
+    letter-spacing: 2px;
+  }
+  .btn-new {
+    margin-top: 16px;
+    background: transparent;
+    border: 2px solid var(--navy);
+    color: var(--navy);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 600;
+    padding: 11px 32px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-new:hover { background: var(--navy); color: #fff; }
+
+  /* print summary table */
+  #print-area { display: none; }
+  @media print {
+    body { background: #fff; }
+    .hero, .contrib-banner, #main-form, .btn-new { display: none !important; }
+    #success-screen { display: block !important; box-shadow: none; }
+    #print-area { display: block; margin-top: 24px; text-align: left; }
+    #print-area table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    #print-area td { padding: 7px 10px; border-bottom: 1px solid #ddd; }
+    #print-area td:first-child { font-weight: 600; width: 40%; color: #333; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Official Registration</div>
+  <h1>Fastabiqul <span>Khairat</span><br>Cooperative Society</h1>
+  <div class="gold-line"></div>
+  <p class="hero-sub">[Insert School Name] Alumni • Membership Registration Form</p>
+  <p class="hero-motto">"But that which benefits the people remains on the Earth" — Ar-Ra'd 13:17</p>
+</div>
+
+<!-- CONTRIBUTION NOTICE -->
+<div class="contrib-banner">
+  <span class="icon">💰</span>
+  <p>Monthly Contribution: <strong>₦500</strong> &nbsp;·&nbsp; Due on or before the last day of every month</p>
+</div>
+
+<!-- FORM -->
+<div class="form-wrapper">
+  <form id="main-form" novalidate>
+
+    <!-- SECTION 1: Personal Info -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-title">Personal Information</div>
+      </div>
+      <div class="grid-2">
+        <div class="field" id="f-firstname">
+          <label>First Name <span class="req">*</span></label>
+          <input type="text" id="firstname" placeholder="e.g. Chidera" autocomplete="given-name">
+          <span class="error-msg">Please enter your first name.</span>
+        </div>
+        <div class="field" id="f-lastname">
+          <label>Last Name <span class="req">*</span></label>
+          <input type="text" id="lastname" placeholder="e.g. Okafor" autocomplete="family-name">
+          <span class="error-msg">Please enter your last name.</span>
+        </div>
+        <div class="field" id="f-othername">
+          <label>Other Name(s)</label>
+          <input type="text" id="othername" placeholder="Middle name (optional)">
+        </div>
+        <div class="field" id="f-gender">
+          <label>Gender <span class="req">*</span></label>
+          <select id="gender">
+            <option value="">— Select —</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Prefer not to say</option>
+          </select>
+          <span class="error-msg">Please select your gender.</span>
+        </div>
+        <div class="field" id="f-dob">
+          <label>Date of Birth <span class="req">*</span></label>
+          <input type="date" id="dob">
+          <span class="error-msg">Please enter your date of birth.</span>
+        </div>
+        <div class="field" id="f-marital">
+          <label>Marital Status</label>
+          <select id="marital">
+            <option value="">— Select —</option>
+            <option>Single</option>
+            <option>Married</option>
+            <option>Divorced</option>
+            <option>Widowed</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: School Details -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-title">School Details</div>
+      </div>
+      <div class="grid-2">
+        <div class="field" id="f-gradyear">
+          <label>Year of Graduation <span class="req">*</span></label>
+          <input type="number" id="gradyear" placeholder="e.g. 2005" min="1970" max="2024">
+          <span class="error-msg">Please enter a valid graduation year.</span>
+        </div>
+        <div class="field" id="f-class">
+          <label>Class / Set</label>
+          <input type="text" id="class" placeholder="e.g. Class of 2005 / Set 18">
+        </div>
+        <div class="field full" id="f-house">
+          <label>House / Dormitory (if applicable)</label>
+          <input type="text" id="house" placeholder="e.g. Phoenix House">
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: Contact Info -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-title">Contact Information</div>
+      </div>
+      <div class="grid-2">
+        <div class="field" id="f-phone">
+          <label>Phone Number <span class="req">*</span></label>
+          <input type="tel" id="phone" placeholder="e.g. 08012345678" autocomplete="tel">
+          <span class="error-msg">Please enter a valid phone number.</span>
+        </div>
+        <div class="field" id="f-whatsapp">
+          <label>WhatsApp Number</label>
+          <input type="tel" id="whatsapp" placeholder="If different from above">
+        </div>
+        <div class="field full" id="f-email">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="e.g. chidera@email.com" autocomplete="email">
+          <span class="error-msg">Please enter a valid email address.</span>
+        </div>
+        <div class="field full" id="f-address">
+          <label>Residential Address <span class="req">*</span></label>
+          <textarea id="address" placeholder="House number, Street, City, State"></textarea>
+          <span class="error-msg">Please enter your address.</span>
+        </div>
+        <div class="field" id="f-state">
+          <label>State of Residence <span class="req">*</span></label>
+          <select id="state">
+            <option value="">— Select State —</option>
+            <option>Abia</option><option>Adamawa</option><option>Akwa Ibom</option>
+            <option>Anambra</option><option>Bauchi</option><option>Bayelsa</option>
+            <option>Benue</option><option>Borno</option><option>Cross River</option>
+            <option>Delta</option><option>Ebonyi</option><option>Edo</option>
+            <option>Ekiti</option><option>Enugu</option><option>FCT — Abuja</option>
+            <option>Gombe</option><option>Imo</option><option>Jigawa</option>
+            <option>Kaduna</option><option>Kano</option><option>Katsina</option>
+            <option>Kebbi</option><option>Kogi</option><option>Kwara</option>
+            <option>Lagos</option><option>Nasarawa</option><option>Niger</option>
+            <option>Ogun</option><option>Ondo</option><option>Osun</option>
+            <option>Oyo</option><option>Plateau</option><option>Rivers</option>
+            <option>Sokoto</option><option>Taraba</option><option>Yobe</option>
+            <option>Zamfara</option><option>Outside Nigeria</option>
+          </select>
+          <span class="error-msg">Please select your state.</span>
+        </div>
+        <div class="field" id="f-country">
+          <label>Country</label>
+          <input type="text" id="country" value="Nigeria" placeholder="Nigeria">
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: Professional Info -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-title">Professional Background</div>
+      </div>
+      <div class="grid-2">
+        <div class="field" id="f-occupation">
+          <label>Occupation / Profession <span class="req">*</span></label>
+          <input type="text" id="occupation" placeholder="e.g. Teacher, Engineer, Trader">
+          <span class="error-msg">Please enter your occupation.</span>
+        </div>
+        <div class="field">
+          <label>Employer / Business Name</label>
+          <input type="text" id="employer" placeholder="Optional">
+        </div>
+        <div class="field full">
+          <label>Skills or Services You Can Offer Members</label>
+          <input type="text" id="skills" placeholder="e.g. Legal advice, Medical support, Accounting, Driving...">
+          <span class="hint">Help us build our member network directory.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: Next of Kin -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-title">Next of Kin / Emergency Contact</div>
+      </div>
+      <div class="grid-2">
+        <div class="field" id="f-nokname">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" id="nokname" placeholder="Next of kin's full name">
+          <span class="error-msg">Please enter next of kin name.</span>
+        </div>
+        <div class="field" id="f-nokrel">
+          <label>Relationship <span class="req">*</span></label>
+          <select id="nokrel">
+            <option value="">— Select —</option>
+            <option>Spouse</option><option>Parent</option><option>Sibling</option>
+            <option>Child</option><option>Friend</option><option>Other</option>
+          </select>
+          <span class="error-msg">Please select the relationship.</span>
+        </div>
+        <div class="field" id="f-nokphone">
+          <label>Phone Number <span class="req">*</span></label>
+          <input type="tel" id="nokphone" placeholder="Next of kin's phone">
+          <span class="error-msg">Please enter next of kin phone number.</span>
+        </div>
+        <div class="field">
+          <label>Address (if different)</label>
+          <input type="text" id="nokaddress" placeholder="Optional">
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 6: How did you hear -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-title">Additional Details</div>
+      </div>
+      <div class="grid-2">
+        <div class="field full">
+          <label>How did you hear about us?</label>
+          <div class="radio-group" id="how-group">
+            <label class="radio-opt"><input type="radio" name="how" value="WhatsApp"> WhatsApp</label>
+            <label class="radio-opt"><input type="radio" name="how" value="Facebook"> Facebook</label>
+            <label class="radio-opt"><input type="radio" name="how" value="Friend"> A friend told me</label>
+            <label class="radio-opt"><input type="radio" name="how" value="Classmate"> Former classmate</label>
+            <label class="radio-opt"><input type="radio" name="how" value="Other"> Other</label>
+          </div>
+        </div>
+        <div class="field full">
+          <label>Any suggestion or message for the Executive Committee?</label>
+          <textarea id="message" placeholder="Optional — share any thoughts, ideas, or expectations..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 7: Declaration -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div class="section-title">Declaration & Agreement</div>
+      </div>
+      <div class="declaration">
+        I, the undersigned, hereby apply for membership of the <strong>Fastabiqul Khairat Cooperative Society</strong>. I confirm that all information provided above is true and accurate to the best of my knowledge. I agree to:
+        <br><br>
+        • Pay the monthly contribution of <strong>₦500</strong> promptly on or before the last day of each month.<br>
+        • Abide by the <strong>Constitution and Bylaws</strong> of the Society in their entirety.<br>
+        • Conduct myself with dignity, honesty, and respect toward all members.<br>
+        • Accept the decisions of the Executive Committee and General Assembly as binding.<br>
+        • Notify the Society of any change in my contact information within 30 days.
+      </div>
+      <label class="declaration-check" id="f-agree">
+        <input type="checkbox" id="agree">
+        <span>I have read and I fully agree to the terms and obligations stated above. <span class="req">*</span></span>
+      </label>
+      <span class="error-msg" id="agree-error" style="display:none;margin-top:8px;font-size:11px;color:var(--red);font-weight:500;">You must agree to the declaration to proceed.</span>
+    </div>
+
+    <div class="submit-area">
+      <button type="submit" class="btn-submit" id="submit-btn">Submit Registration →</button>
+      <p style="margin-top:14px;font-size:12px;color:rgba(255,255,255,0.5);">Your information is kept confidential and used only for Society purposes.</p>
+    </div>
+  </form>
+
+  <!-- SUCCESS SCREEN -->
+  <div id="success-screen">
+    <div class="success-icon">✓</div>
+    <h2>Welcome to the Family!</h2>
+    <p>Your membership registration has been received successfully.<br>Your reference number is:</p>
+    <div class="member-ref" id="ref-num">FKCS-000000</div>
+    <p>Please save this reference number. The Executive Committee will contact you shortly to confirm your membership and provide payment details for your first contribution of <strong>₦500</strong>.</p>
+    <br>
+    <a href="#" id="wa-send-link" target="_blank" rel="noopener" style="display:inline-block;background:#25D366;color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:13px 36px;border-radius:6px;margin-bottom:12px;">📲 Send My Details to the Executive on WhatsApp</a>
+    <p style="font-size:12px;color:#999;margin-bottom:6px;">Tap above, then press Send in WhatsApp to complete your registration.</p>
+    <br>
+    <button class="btn-new" onclick="resetForm()">Register Another Member</button>
+
+    <div id="print-area">
+      <h3 style="margin-bottom:12px;color:#0B1D3A;">Registration Summary</h3>
+      <table id="summary-table"></table>
+    </div>
+  </div>
+</div>
+
+<script>
+  const required = [
+    { id: 'firstname', msg: 'Please enter your first name.' },
+    { id: 'lastname',  msg: 'Please enter your last name.' },
+    { id: 'gender',    msg: 'Please select your gender.' },
+    { id: 'dob',       msg: 'Please enter your date of birth.' },
+    { id: 'gradyear',  msg: 'Please enter a valid graduation year.' },
+    { id: 'phone',     msg: 'Please enter a valid phone number.' },
+    { id: 'email',     msg: 'Please enter a valid email address.' },
+    { id: 'address',   msg: 'Please enter your address.' },
+    { id: 'state',     msg: 'Please select your state.' },
+    { id: 'occupation',msg: 'Please enter your occupation.' },
+    { id: 'nokname',   msg: 'Please enter next of kin name.' },
+    { id: 'nokrel',    msg: 'Please select the relationship.' },
+    { id: 'nokphone',  msg: 'Please enter next of kin phone number.' },
+  ];
+
+  function validate() {
+    let ok = true;
+    required.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      const wrapper = document.getElementById('f-' + id);
+      if (!el || !wrapper) return;
+      const val = el.value.trim();
+      let valid = val !== '';
+      if (id === 'email') valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+      if (id === 'gradyear') valid = val >= 1970 && val <= new Date().getFullYear();
+      wrapper.classList.toggle('has-error', !valid);
+      el.classList.toggle('error', !valid);
+      if (!valid) ok = false;
+    });
+    const agree = document.getElementById('agree');
+    const agreeErr = document.getElementById('agree-error');
+    if (!agree.checked) { agreeErr.style.display = 'block'; ok = false; }
+    else { agreeErr.style.display = 'none'; }
+    return ok;
+  }
+
+  // live clear errors
+  required.forEach(({ id }) => {
+    const el = document.getElementById(id);
+    const wrapper = document.getElementById('f-' + id);
+    if (el && wrapper) {
+      el.addEventListener('input', () => {
+        wrapper.classList.remove('has-error');
+        el.classList.remove('error');
+      });
+    }
+  });
+
+  function genRef() {
+    const y = new Date().getFullYear();
+    const n = Math.floor(100000 + Math.random() * 900000);
+    return `FKCS-${y}-${n}`;
+  }
+
+  // ⚙️ SET YOUR EXECUTIVE'S WHATSAPP NUMBER HERE — include country code, no + or spaces
+  // Example for Nigeria: "2348012345678"
+  const EXEC_WHATSAPP_NUMBER = "2348035391930";
+
+  function buildWhatsAppMessage(ref) {
+    const fullName = `${document.getElementById('firstname').value} ${document.getElementById('othername').value} ${document.getElementById('lastname').value}`.replace(/\s+/g,' ').trim();
+    const lines = [
+      "*FASTABIQUL KHAIRAT — NEW MEMBERSHIP REGISTRATION*",
+      "",
+      `*Reference No:* ${ref}`,
+      `*Full Name:* ${fullName}`,
+      `*Gender:* ${document.getElementById('gender').value}`,
+      `*Date of Birth:* ${document.getElementById('dob').value}`,
+      `*Graduation Year:* ${document.getElementById('gradyear').value}`,
+      `*Class/Set:* ${document.getElementById('class').value || '—'}`,
+      `*House:* ${document.getElementById('house').value || '—'}`,
+      "",
+      `*Phone:* ${document.getElementById('phone').value}`,
+      `*WhatsApp:* ${document.getElementById('whatsapp').value || document.getElementById('phone').value}`,
+      `*Email:* ${document.getElementById('email').value}`,
+      `*Address:* ${document.getElementById('address').value}`,
+      `*State:* ${document.getElementById('state').value}`,
+      `*Country:* ${document.getElementById('country').value}`,
+      "",
+      `*Occupation:* ${document.getElementById('occupation').value}`,
+      `*Employer/Business:* ${document.getElementById('employer').value || '—'}`,
+      `*Skills Offered:* ${document.getElementById('skills').value || '—'}`,
+      "",
+      `*Next of Kin:* ${document.getElementById('nokname').value} (${document.getElementById('nokrel').value})`,
+      `*NOK Phone:* ${document.getElementById('nokphone').value}`,
+      "",
+      `*Message:* ${document.getElementById('message').value || '—'}`,
+    ];
+    return encodeURIComponent(lines.join("\n"));
+  }
+
+  document.getElementById('main-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!validate()) { document.querySelector('.has-error')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true; btn.textContent = 'Submitting…';
+
+    setTimeout(() => {
+      const ref = genRef();
+      document.getElementById('ref-num').textContent = ref;
+
+      // build summary
+      const rows = [
+        ['Full Name', `${document.getElementById('firstname').value} ${document.getElementById('othername').value} ${document.getElementById('lastname').value}`.replace(/\s+/g,' ').trim()],
+        ['Gender', document.getElementById('gender').value],
+        ['Date of Birth', document.getElementById('dob').value],
+        ['Graduation Year', document.getElementById('gradyear').value],
+        ['Class / Set', document.getElementById('class').value || '—'],
+        ['Phone', document.getElementById('phone').value],
+        ['Email', document.getElementById('email').value],
+        ['State', document.getElementById('state').value],
+        ['Occupation', document.getElementById('occupation').value],
+        ['Reference No.', ref],
+      ];
+      document.getElementById('summary-table').innerHTML = rows.map(([k,v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+
+      // build WhatsApp send link
+      const waMsg = buildWhatsAppMessage(ref);
+      document.getElementById('wa-send-link').href = `https://wa.me/${EXEC_WHATSAPP_NUMBER}?text=${waMsg}`;
+
+      document.getElementById('main-form').style.display = 'none';
+      document.getElementById('success-screen').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 1200);
+  });
+
+  function resetForm() {
+    document.getElementById('main-form').reset();
+    document.getElementById('main-form').style.display = 'block';
+    document.getElementById('success-screen').style.display = 'none';
+    document.getElementById('submit-btn').disabled = false;
+    document.getElementById('submit-btn').textContent = 'Submit Registration →';
+    document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+    document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
